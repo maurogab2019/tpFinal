@@ -16,7 +16,10 @@ namespace tpSimulacion.entidades
 
         public Grua grua { get; set; }
 
-        public int inicioLibre { get; set; }
+
+        public int InicioOcio { get; set; } = 0;
+
+        public int FinOcio { get; set; }
 
 
         public void Reparando(Taller taller)

@@ -16,6 +16,9 @@ namespace tpSimulacion
         public TpSIM()
         {
             InitializeComponent();
+            txtMin.Text = "1";
+            txtMax.Text = "4";
+            txtCantDiasReparacion.Text = "20";
             dgvTabla.AllowUserToAddRows = false;
             dgvTabla.Visible = false;
         }
@@ -61,6 +64,8 @@ namespace tpSimulacion
             {
                             registro.reloj.ToString(),
                             registro.evento.ToString(),
+                            registro.RndTiempoReparacion.ToString(),
+                            registro.tiempoReparacion.ToString(),
 
 
                             listaTaller[0].finReparacion.ToString(),
@@ -84,6 +89,11 @@ namespace tpSimulacion
                             registro.cantidadGruasCola.ToString(),
                             registro.PromedioTiempoReparacion.ToString(),
                             registro.tiempoMaximoReparacion.ToString(),
+                            registro.cantidadMaximaEnCola.ToString(),
+                            registro.cantidadGruasDisponibles.ToString(),
+                            registro.promedioGruasDisponibles.ToString(),
+                            registro.tiempoOciosoCapacidades.ToString(),
+                            registro.AcumuladortiempoOciosoCapacidades.ToString(),
                             listaGruas[0].proximaLlegadaReparación.ToString() + "-" + listaGruas[0].estado.ToString(), 
                             listaGruas[1].proximaLlegadaReparación.ToString() + "-" + listaGruas[1].estado.ToString(),
                             listaGruas[2].proximaLlegadaReparación.ToString() + "-" + listaGruas[2].estado.ToString(),
@@ -217,9 +227,9 @@ namespace tpSimulacion
         }
 
         //dar posibilidad de ingresar ese 1 y 4, es decir los extremos de la distriubiocn uniforme
-        public int calcularTiempoReparacion(double numeroRND1)
+        public int calcularTiempoReparacion(double numeroRND1, int uniformeMinimo, int uniformeMaximo)
         {
-            var tiempoReparacion =(int)Math.Truncate(1 + (numeroRND1 * 4));
+            var tiempoReparacion =(int)Math.Truncate(uniformeMinimo + (numeroRND1 * (uniformeMaximo - uniformeMinimo + 1 )));
             return tiempoReparacion;
         }
 
@@ -230,8 +240,15 @@ namespace tpSimulacion
             dgvTabla.Visible = false;
             dgvTabla.Rows.Clear();
 
-            var Iteraciones = Convert.ToDouble(txtN.Text);
-            var desde = Convert.ToDouble(txtDesde.Text);
+            var Iteraciones = Convert.ToInt64(txtN.Text);
+            var desde = Convert.ToInt64(txtDesde.Text);
+
+            var uniformeMinimo = Convert.ToInt32(txtMin.Text);
+
+            var uniformeMaximo = Convert.ToInt32(txtMax.Text);
+
+
+            var cadaCuantoDiasReparacion = Convert.ToInt32(txtCantDiasReparacion.Text);
 
             var registro = new Registro();
             registro.evento = "Inicializacion";
@@ -281,13 +298,14 @@ namespace tpSimulacion
 
             }
 
-
+            registro.cantidadGruasDisponibles = 120;
 
             mostrarTabla(registro, listaTaller, listaGruas);
             //aca arranca las iteraciones
             for (var j = 0; j < Iteraciones; j++)
             {
-                var minimoLLegadaGrua = 99999999;
+                registro.tiempoOciosoCapacidades = 0;
+                var minimoLLegadaGrua = 9999999;
                 //var gruaProximaLlegada = new Grua();
                 var gruaProximaLlegada = new Grua(); 
                 //List<int> ordenados = listaProximasLlgadas.OrderBy(number => number).ToList();
@@ -301,7 +319,7 @@ namespace tpSimulacion
                     }
                 }
 
-                var minimoFinReparacion = 99999999;
+                var minimoFinReparacion = 999999999;
                 var ban = false;
                 for (var i = 0; i < 8; i++)
                 {
@@ -319,7 +337,7 @@ namespace tpSimulacion
 
 
                 //pregunto cual es el proximo evento
-                if(minimoLLegadaGrua < minimoFinReparacion || ban == false && minimoLLegadaGrua != 99999999)
+                if(minimoLLegadaGrua < minimoFinReparacion || ban == false && minimoLLegadaGrua != 9999999)
                 {
                     registro.reloj = minimoLLegadaGrua;
                     registro.evento = "Lleg Grua " + (gruaProximaLlegada.numeroGrua + 1).ToString();
@@ -332,27 +350,40 @@ namespace tpSimulacion
                         var tallerLibre = traerTallerLibre(listaTaller);
                         //cambio el estado del taller y la grua 
                         tallerLibre.Reparando(tallerLibre);
+
+                        // defino el fin ocio y calcul el tiempo que estuve libre y lo acumulo
+                        tallerLibre.FinOcio = registro.reloj;
+                        registro.AcumuladortiempoOciosoCapacidades += tallerLibre.FinOcio - tallerLibre.InicioOcio;
+
+
                         // inicio atencion
 
                         gruaProximaLlegada.InicioReparacion = registro.reloj;
                         //cambio de estado
                         gruaProximaLlegada.Repararndo(gruaProximaLlegada);
+
                         //asigno la grua al taller
                         tallerLibre.grua = gruaProximaLlegada;
 
                         double numeroRND1 = random1.NextDouble();
                         //calculo el tiempo de reparacion y fin de reparacion
-                        tallerLibre.tiempoReparacion = calcularTiempoReparacion(numeroRND1);
+                        tallerLibre.tiempoReparacion = calcularTiempoReparacion(numeroRND1, uniformeMinimo, uniformeMaximo);
+                        registro.tiempoReparacion = tallerLibre.tiempoReparacion;
+                        registro.RndTiempoReparacion = Math.Truncate(numeroRND1 * 1000) / 1000;
                         tallerLibre.finReparacion = registro.reloj + tallerLibre.tiempoReparacion;
                         //actualizo el taller en la lista
                         listaTaller[tallerLibre.numeroTaller] = tallerLibre;
+
+                        //actualizo evento nombre
+                        registro.evento += " y va a T(" + (tallerLibre.numeroTaller + 1).ToString() + ")";
                     }
                     else
                     {
                         gruaProximaLlegada.InicioReparacion = registro.reloj;
                         colaGruasEsperando.Add(gruaProximaLlegada);
                         gruaProximaLlegada.EsperarEnCola(gruaProximaLlegada);
-                        registro.cantidadGruasCola = colaGruasEsperando.Count();
+                        registro.evento += " A cola";
+                        //registro.cantidadGruasCola = colaGruasEsperando.Count();
                     }
                 }
 
@@ -370,36 +401,40 @@ namespace tpSimulacion
                     }
 
                     registro.reloj = minimoFinReparacion;
-                    registro.evento = "Fin R taller " + (taller.numeroTaller + 1).ToString();
+                    registro.evento = "Fin R taller " + (taller.numeroTaller + 1).ToString() +" (G" + (taller.grua.numeroGrua + 1).ToString() + ")";
                     
                     //cambiar ese 20 y dejar que lo ingresen por parametro
-                    taller.grua.proximaLlegadaReparación = registro.reloj +20;
+                    taller.grua.proximaLlegadaReparación = registro.reloj + cadaCuantoDiasReparacion;
 
                     //saco el fin reparacion grua
                     taller.grua.FinReparacion = registro.reloj;
 
-
+                    //metrica para ver el maximo tiempo de reparacion *************
                     var maximo = taller.grua.FinReparacion - taller.grua.InicioReparacion;
 
                     if(maximo > registro.tiempoMaximoReparacion) { 
                         registro.tiempoMaximoReparacion = maximo;
                     }
-
+                    //*****************************
+                    //metricas promedio de tiempo en reparar una grua ****************************
                     registro.AcumuladorGruasReparadas += 1;
                     registro.AcumuladorTiemposReparacion += taller.grua.FinReparacion - taller.grua.InicioReparacion;
 
                     var promedio = ((double)registro.AcumuladorTiemposReparacion / (double)registro.AcumuladorGruasReparadas);
                    
                     registro.PromedioTiempoReparacion = Math.Truncate(promedio * 1000) / 1000;
-
+                    //********************************************************
 
                     taller.grua.Trabajando(taller.grua);
+                    
                     //hace falta actualizar la lista?????
                     listaGruas[taller.grua.numeroGrua] = taller.grua; 
 
                     if(colaGruasEsperando.Count == 0)
                     {
                         taller.LiberarTaller(taller);
+                        taller.InicioOcio = registro.reloj;
+                        listaTaller[taller.numeroTaller] = taller;
                     }
                     else
                     {
@@ -416,18 +451,61 @@ namespace tpSimulacion
                         //taller.grua.InicioReparacion = registro.reloj; aca no va porque ya ingreso a reparacion,estaba esperando
                         double numeroRND2 = random1.NextDouble();
                         //calculo el tiempo de reparacion y fin de reparacion
-                        taller.tiempoReparacion = calcularTiempoReparacion(numeroRND2);
+                        taller.tiempoReparacion = calcularTiempoReparacion(numeroRND2,uniformeMinimo,uniformeMaximo);
+
+                        registro.tiempoReparacion = taller.tiempoReparacion;
+                        registro.RndTiempoReparacion = Math.Truncate(numeroRND2 * 1000) / 1000;
+
                         taller.finReparacion = registro.reloj + taller.tiempoReparacion;
+
+                        registro.evento += " Sale cola G " + (taller.grua.numeroGrua + 1).ToString(); 
                         //actualizo el taller en la lista
 
                         //lo saco de la cola
                         colaGruasEsperando.Remove(colaGruasEsperando[0]);
+
                     }
 
 
                 }
 
-                if( j >= desde &&  j <= (desde + 400)  )
+                registro.cantidadGruasCola = colaGruasEsperando.Count();
+
+                //metrica cantidad maxima en cola **********
+                if (registro.cantidadMaximaEnCola < registro.cantidadGruasCola)
+                {
+                    registro.cantidadMaximaEnCola = registro.cantidadGruasCola;
+                }
+                //*********************
+
+                //metrica cantidad y promedio de gruas disponibles *************
+                int cantidadGruasDisponibles = 0;
+                for (var i = 0; i < 120; i++)
+                {
+                    if (listaGruas[i].estado == "T")
+                    {
+                        cantidadGruasDisponibles++;
+                    }
+                }
+                registro.cantidadGruasDisponibles = cantidadGruasDisponibles;
+                var promedioGruaDispo = (double)cantidadGruasDisponibles / 120;
+                registro.promedioGruasDisponibles = Math.Truncate(promedioGruaDispo * 1000) / 1000;
+
+                //**************************************
+
+                for (var i = 0; i < 8; i++)
+                {
+                    if (listaTaller[i].estado == "L")
+                    {
+                        registro.tiempoOciosoCapacidades += registro.reloj - listaTaller[i].InicioOcio;
+                       
+                    }
+                }
+
+
+
+
+                if ( j >= desde &&  j <= (desde + 400)  )
                 {
                     mostrarTabla(registro, listaTaller, listaGruas);
                     

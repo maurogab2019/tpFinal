@@ -35,7 +35,17 @@ namespace tpSimulacion.entidades
 
         public double PromedioTiempoReparacion { get; set; }
 
-        public int AcumuladorGruasReparadas { get; set; }        
+        public int AcumuladorGruasReparadas { get; set; }  
+        
+        public double promedioGruasDisponibles { get; set; }
+
+        public int cantidadGruasDisponibles { get; set; }
+
+        public int tiempoOciosoCapacidades { get; set; }
+
+        public int AcumuladortiempoOciosoCapacidades { get; set; }
+
+
         //metricas luego
     }
 }

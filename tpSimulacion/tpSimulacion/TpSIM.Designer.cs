@@ -28,6 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.txtN = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.dgvTabla = new System.Windows.Forms.DataGridView();
@@ -35,8 +39,17 @@
             this.txtDesde = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtMin = new System.Windows.Forms.TextBox();
+            this.txtMax = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtCantDiasReparacion = new System.Windows.Forms.TextBox();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Evento = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column140 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column141 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -56,6 +69,11 @@
             this.Column18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column138 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column139 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column142 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column143 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column144 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column145 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column146 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -181,16 +199,17 @@
             // 
             // txtN
             // 
-            this.txtN.Location = new System.Drawing.Point(270, 46);
+            this.txtN.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtN.Location = new System.Drawing.Point(284, 44);
             this.txtN.Name = "txtN";
-            this.txtN.Size = new System.Drawing.Size(100, 20);
+            this.txtN.Size = new System.Drawing.Size(100, 26);
             this.txtN.TabIndex = 0;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(8, 46);
+            this.label1.Location = new System.Drawing.Point(32, 44);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(237, 20);
             this.label1.TabIndex = 1;
@@ -198,11 +217,26 @@
             // 
             // dgvTabla
             // 
-            this.dgvTabla.BackgroundColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
+            this.dgvTabla.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvTabla.BackgroundColor = System.Drawing.SystemColors.ControlText;
+            this.dgvTabla.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvTabla.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvTabla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvTabla.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Evento,
+            this.Column140,
+            this.Column141,
             this.Column2,
             this.Column3,
             this.Column4,
@@ -222,6 +256,11 @@
             this.Column18,
             this.Column138,
             this.Column139,
+            this.Column142,
+            this.Column143,
+            this.Column144,
+            this.Column145,
+            this.Column146,
             this.Column19,
             this.Column20,
             this.Column21,
@@ -342,9 +381,23 @@
             this.Column135,
             this.Column136,
             this.Column137});
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvTabla.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvTabla.GridColor = System.Drawing.SystemColors.ActiveCaption;
-            this.dgvTabla.Location = new System.Drawing.Point(-24, 127);
+            this.dgvTabla.Location = new System.Drawing.Point(-11, 219);
             this.dgvTabla.Name = "dgvTabla";
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.Teal;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.Olive;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.White;
+            this.dgvTabla.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvTabla.Size = new System.Drawing.Size(1382, 444);
             this.dgvTabla.TabIndex = 2;
             // 
@@ -352,7 +405,7 @@
             // 
             this.botonSimular.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.botonSimular.Font = new System.Drawing.Font("Modern No. 20", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.botonSimular.Location = new System.Drawing.Point(397, 57);
+            this.botonSimular.Location = new System.Drawing.Point(520, 160);
             this.botonSimular.Name = "botonSimular";
             this.botonSimular.Size = new System.Drawing.Size(203, 47);
             this.botonSimular.TabIndex = 3;
@@ -362,15 +415,16 @@
             // 
             // txtDesde
             // 
-            this.txtDesde.Location = new System.Drawing.Point(270, 83);
+            this.txtDesde.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDesde.Location = new System.Drawing.Point(284, 81);
             this.txtDesde.Name = "txtDesde";
-            this.txtDesde.Size = new System.Drawing.Size(100, 20);
+            this.txtDesde.Size = new System.Drawing.Size(100, 26);
             this.txtDesde.TabIndex = 4;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(645, 74);
+            this.label2.Location = new System.Drawing.Point(507, 63);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(35, 13);
             this.label2.TabIndex = 5;
@@ -380,21 +434,95 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(12, 81);
+            this.label3.Location = new System.Drawing.Point(32, 81);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(132, 20);
             this.label3.TabIndex = 6;
             this.label3.Text = "Mostrar Desde:";
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(32, 114);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(268, 20);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Dist Uniforme tiempo reparacion";
+            // 
+            // txtMin
+            // 
+            this.txtMin.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMin.Location = new System.Drawing.Point(360, 113);
+            this.txtMin.Name = "txtMin";
+            this.txtMin.Size = new System.Drawing.Size(100, 26);
+            this.txtMin.TabIndex = 8;
+            // 
+            // txtMax
+            // 
+            this.txtMax.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMax.Location = new System.Drawing.Point(360, 149);
+            this.txtMax.Name = "txtMax";
+            this.txtMax.Size = new System.Drawing.Size(100, 26);
+            this.txtMax.TabIndex = 9;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(302, 149);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(41, 20);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Max";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(306, 114);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(37, 20);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "Min";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(32, 187);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(321, 20);
+            this.label7.TabIndex = 12;
+            this.label7.Text = "Cada cuantos dias necesita reparacion";
+            // 
+            // txtCantDiasReparacion
+            // 
+            this.txtCantDiasReparacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCantDiasReparacion.Location = new System.Drawing.Point(359, 187);
+            this.txtCantDiasReparacion.Name = "txtCantDiasReparacion";
+            this.txtCantDiasReparacion.Size = new System.Drawing.Size(100, 26);
+            this.txtCantDiasReparacion.TabIndex = 13;
+            // 
             // Column1
             // 
-            this.Column1.HeaderText = "Reloj";
+            this.Column1.HeaderText = "Reloj(dias)";
             this.Column1.Name = "Column1";
             // 
             // Evento
             // 
             this.Evento.HeaderText = "Evento";
             this.Evento.Name = "Evento";
+            // 
+            // Column140
+            // 
+            this.Column140.HeaderText = "Rnd Repa";
+            this.Column140.Name = "Column140";
+            // 
+            // Column141
+            // 
+            this.Column141.HeaderText = "Tiempo Repa";
+            this.Column141.Name = "Column141";
             // 
             // Column2
             // 
@@ -438,42 +566,42 @@
             // 
             // Column10
             // 
-            this.Column10.HeaderText = "Est(1)";
+            this.Column10.HeaderText = "Estado(1)";
             this.Column10.Name = "Column10";
             // 
             // Column11
             // 
-            this.Column11.HeaderText = "Est(2)";
+            this.Column11.HeaderText = "Estado(2)";
             this.Column11.Name = "Column11";
             // 
             // Column12
             // 
-            this.Column12.HeaderText = "Est(3)";
+            this.Column12.HeaderText = "Estado(3)";
             this.Column12.Name = "Column12";
             // 
             // Column13
             // 
-            this.Column13.HeaderText = "Est(4)";
+            this.Column13.HeaderText = "Estado(4)";
             this.Column13.Name = "Column13";
             // 
             // Column14
             // 
-            this.Column14.HeaderText = "Est(5)";
+            this.Column14.HeaderText = "Estado(5)";
             this.Column14.Name = "Column14";
             // 
             // Column15
             // 
-            this.Column15.HeaderText = "Est(6)";
+            this.Column15.HeaderText = "Estado(6)";
             this.Column15.Name = "Column15";
             // 
             // Column16
             // 
-            this.Column16.HeaderText = "Est(7)";
+            this.Column16.HeaderText = "Estado(7)";
             this.Column16.Name = "Column16";
             // 
             // Column17
             // 
-            this.Column17.HeaderText = "Est(8)";
+            this.Column17.HeaderText = "Estado(8)";
             this.Column17.Name = "Column17";
             // 
             // Column18
@@ -490,6 +618,31 @@
             // 
             this.Column139.HeaderText = "Max T Repa";
             this.Column139.Name = "Column139";
+            // 
+            // Column142
+            // 
+            this.Column142.HeaderText = "Max en cola";
+            this.Column142.Name = "Column142";
+            // 
+            // Column143
+            // 
+            this.Column143.HeaderText = "Cant Gruas Dispo";
+            this.Column143.Name = "Column143";
+            // 
+            // Column144
+            // 
+            this.Column144.HeaderText = "Prom Gruas dispo";
+            this.Column144.Name = "Column144";
+            // 
+            // Column145
+            // 
+            this.Column145.HeaderText = "T ocioso";
+            this.Column145.Name = "Column145";
+            // 
+            // Column146
+            // 
+            this.Column146.HeaderText = "T ocioso acumulado";
+            this.Column146.Name = "Column146";
             // 
             // Column19
             // 
@@ -1097,6 +1250,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Peru;
             this.ClientSize = new System.Drawing.Size(1370, 749);
+            this.Controls.Add(this.txtCantDiasReparacion);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.txtMax);
+            this.Controls.Add(this.txtMin);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtDesde);
@@ -1121,8 +1281,17 @@
         private System.Windows.Forms.TextBox txtDesde;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtMin;
+        private System.Windows.Forms.TextBox txtMax;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox txtCantDiasReparacion;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Evento;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column140;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column141;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
@@ -1142,6 +1311,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column18;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column138;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column139;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column142;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column143;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column144;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column145;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column146;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column19;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column20;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column21;
